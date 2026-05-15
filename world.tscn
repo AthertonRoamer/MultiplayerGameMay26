@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://dbqqja0l2wmea"]
 
-[ext_resource type="Script" uid="uid://c3bov7eeeqba6" path="res://world.gd" id="1_fj7yv"]
+[ext_resource type="Script" path="res://world.gd" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://bpkc11xgb7olc" path="res://player/player.tscn" id="2_aqk2v"]
 [ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="2_tlwt5"]
+
+[sub_resource type="Gradient" id="Gradient_tlwt5"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aqk2v"]
+gradient = SubResource("Gradient_tlwt5")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hirhj"]
 normal = Vector2(0, 1)
@@ -15,40 +21,105 @@ normal = Vector2(-0.99987, -0.0161269)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2ym6e"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_036b0"]
+size = Vector2(40, 40)
+
+[sub_resource type="Environment" id="Environment_tlwt5"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.82
+glow_bloom = 0.17
+glow_blend_mode = 0
+
 [node name="World" type="Node2D" unique_id=1269184100]
 script = ExtResource("1_fj7yv")
 player_scene = ExtResource("2_aqk2v")
 
 [node name="Terrain" type="Node2D" parent="." unique_id=1649647355]
 
-[node name="Background" type="Polygon2D" parent="Terrain" unique_id=748907868]
-color = Color(0.439216, 0.45098, 0.701961, 1)
-polygon = PackedVector2Array(-136, -86, 1253, -87, 1253, 735, -137, 735)
+[node name="background" type="TextureRect" parent="Terrain" unique_id=1042274178]
+offset_left = -930.0
+offset_top = -649.0
+offset_right = 1830.0
+offset_bottom = 1138.0
+texture = SubResource("GradientTexture2D_aqk2v")
 
-[node name="Boundary" type="StaticBody2D" parent="Terrain" unique_id=764690071]
+[node name="bounds" type="Node2D" parent="Terrain" unique_id=1735003212]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary" unique_id=1648099981]
+[node name="Boundary" type="StaticBody2D" parent="Terrain/bounds" unique_id=764690071]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/bounds/Boundary" unique_id=1648099981]
 shape = SubResource("WorldBoundaryShape2D_hirhj")
 
-[node name="Boundary2" type="StaticBody2D" parent="Terrain" unique_id=411511207]
+[node name="Boundary2" type="StaticBody2D" parent="Terrain/bounds" unique_id=411511207]
 position = Vector2(0, 300)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary2" unique_id=1912921876]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/bounds/Boundary2" unique_id=1912921876]
 shape = SubResource("WorldBoundaryShape2D_eq8uu")
 
-[node name="Boundary3" type="StaticBody2D" parent="Terrain" unique_id=699297925]
+[node name="Boundary3" type="StaticBody2D" parent="Terrain/bounds" unique_id=699297925]
 position = Vector2(0, 300)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary3" unique_id=54570752]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/bounds/Boundary3" unique_id=54570752]
 position = Vector2(1151, 13)
 shape = SubResource("WorldBoundaryShape2D_hksnq")
 
-[node name="Boundary4" type="StaticBody2D" parent="Terrain" unique_id=478723232]
+[node name="Boundary4" type="StaticBody2D" parent="Terrain/bounds" unique_id=478723232]
 position = Vector2(0, 300)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary4" unique_id=2040139926]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/bounds/Boundary4" unique_id=2040139926]
 position = Vector2(1151, 347)
 shape = SubResource("WorldBoundaryShape2D_2ym6e")
+
+[node name="boxes" type="Node2D" parent="Terrain" unique_id=203337733]
+
+[node name="box" type="StaticBody2D" parent="Terrain/boxes" unique_id=100504531]
+position = Vector2(431, 199)
+rotation = 0.736839
+scale = Vector2(2.6799998, 1.4)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Terrain/boxes/box" unique_id=278317448]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.2901961, 0.015686275, 0.16470589, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/boxes/box" unique_id=870319018]
+visible = false
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_036b0")
+
+[node name="box2" type="StaticBody2D" parent="Terrain/boxes" unique_id=353476250]
+position = Vector2(558, 454)
+rotation = -0.09263374
+scale = Vector2(2.994612, 2.8540227)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Terrain/boxes/box2" unique_id=1957865332]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.2901961, 0.015686275, 0.16470589, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/boxes/box2" unique_id=1698637181]
+visible = false
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_036b0")
+
+[node name="box3" type="StaticBody2D" parent="Terrain/boxes" unique_id=2078083465]
+position = Vector2(753, 191.00005)
+rotation = 2.5537405
+scale = Vector2(2.6399999, 2.2799993)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Terrain/boxes/box3" unique_id=1019284256]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.2901961, 0.015686275, 0.16470589, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/boxes/box3" unique_id=1299256268]
+visible = false
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_036b0")
 
 [node name="NetworkUnloader" type="Node" parent="." unique_id=989094228]
 script = ExtResource("2_tlwt5")
@@ -66,6 +137,9 @@ offset_top = 0.0639992
 offset_right = -0.160034
 offset_bottom = 0.127998
 text = "Quit Game"
+
+[node name="glow" type="WorldEnvironment" parent="." unique_id=24881030]
+environment = SubResource("Environment_tlwt5")
 
 [connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]
 [connection signal="pressed" from="CanvasLayer/Quit Game" to="." method="_on_quit_game_pressed"]

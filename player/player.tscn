@@ -1,24 +1,45 @@
 [gd_scene format=3 uid="uid://bpkc11xgb7olc"]
 
 [ext_resource type="Script" uid="uid://bl4ves5dbgto4" path="res://player/player.gd" id="1_rkbax"]
-[ext_resource type="Texture2D" uid="uid://gqmqpaagpccm" path="res://icon.svg" id="2_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://bnwxo7j5qye0o" path="res://art/Tank.png" id="2_rkbax"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8330"]
-size = Vector2(64, 64)
+[sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
+radius = 14.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("name_display")]
+[node name="Player" type="CharacterBody2D" unique_id=1464612858 node_paths=PackedStringArray("name_display", "gun", "body")]
+position = Vector2(1, 0)
 motion_mode = 1
 script = ExtResource("1_rkbax")
 name_display = NodePath("NameDisplay")
+gun = NodePath("gun")
+body = NodePath("tank")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_g1dw6")
+[node name="tank" type="Sprite2D" parent="." unique_id=814488435]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(0, 4)
+texture = ExtResource("2_rkbax")
+offset = Vector2(0, -4)
+hframes = 8
+vframes = 2
+frame = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_b8330")
+[node name="gun" type="Sprite2D" parent="." unique_id=1222987965]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(0, 4)
+texture = ExtResource("2_rkbax")
+offset = Vector2(0, -4)
+hframes = 8
+vframes = 2
+frame = 2
 
-[node name="NameDisplay" type="Label" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1721882908]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_rkbax")
+
+[node name="NameDisplay" type="Label" parent="." unique_id=161793452]
 offset_left = -33.0
 offset_top = -66.0
 offset_right = 31.0
@@ -26,3 +47,6 @@ offset_bottom = -43.0
 text = "Player"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=419999287]
+enabled = false
