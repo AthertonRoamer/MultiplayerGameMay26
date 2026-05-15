@@ -9,39 +9,64 @@ extends Area2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 
-var _player_overlapping: Node = null
+var _picked_up := false
 
 
 func _ready() -> void:
-	sprite.texture = mod.texture
+	if mod != null:
+		sprite.texture = mod.texture
 	
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
+	body_entered.connect(_update_highlight)
+	body_exited.connect(_update_highlight)
 	
 	sprite.modulate = normal_modulate
 
 
 func _process(_delta: float) -> void:
-	if _player_overlapping == null:
+	if _picked_up:
+		return
+	
+	var local_player := _get_local_overlapping_player()
+	
+	if local_player == null:
 		return
 	
 	if Input.is_action_just_pressed(pickup_action):
-		if _player_overlapping.has_method("pickup_mod"):
-			_player_overlapping.pickup_mod(mod)
-			queue_free()
+		if local_player.has_method("pickup_mod"):
+			local_player.pickup_mod(mod)
+			
+			_picked_up = true
+			rpc("destroy_pickup")
 
 
-func _on_body_entered(body: Node) -> void:
-	if not body.is_in_group("player"):
+func _update_highlight(_body: Node) -> void:
+	if _picked_up:
+		sprite.modulate = normal_modulate
 		return
 	
-	_player_overlapping = body
-	sprite.modulate = highlight_modulate
+	if _get_overlapping_players().is_empty():
+		sprite.modulate = normal_modulate
+	else:
+		sprite.modulate = highlight_modulate
 
 
-func _on_body_exited(body: Node) -> void:
-	if body != _player_overlapping:
-		return
+func _get_overlapping_players() -> Array[Node]:
+	var players: Array[Node] = []
 	
-	_player_overlapping = null
-	sprite.modulate = normal_modulate
+	for body in get_overlapping_bodies():
+		if body.is_in_group("player"):
+			players.append(body)
+	
+	return players
+
+
+func _get_local_overlapping_player() -> Node:
+	for player in _get_overlapping_players():
+		if player.local:
+			return player
+	return null
+
+
+@rpc("call_local", "reliable", "any_peer")
+func destroy_pickup() -> void:
+	queue_free()

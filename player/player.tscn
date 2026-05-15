@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bl4ves5dbgto4" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Texture2D" uid="uid://bnwxo7j5qye0o" path="res://art/Tank.png" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://dqgatjwsjkj2x" path="res://player/player_projectile_handler.gd" id="3_g1dw6"]
+[ext_resource type="PackedScene" uid="uid://cxb8hycll1kwn" path="res://projectile/smg_bullet.tscn" id="4_yw30f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 14.0
 
-
-[node name="Player" type="CharacterBody2D" unique_id=2022898897 node_paths=PackedStringArray("name_display", "gun", "body") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=2022898897 node_paths=PackedStringArray("name_display", "gun", "body") groups=["damageable", "player"]]
 position = Vector2(1, 0)
 motion_mode = 1
 script = ExtResource("1_rkbax")
@@ -35,6 +36,9 @@ hframes = 8
 vframes = 2
 frame = 2
 
+[node name="FirePoint" type="Node2D" parent="gun" unique_id=440548660]
+position = Vector2(0, -25)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1721882908]
 visible = false
 position = Vector2(0, 2)
@@ -51,3 +55,8 @@ vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=419999287]
 enabled = false
+
+[node name="ProjectileHandler" type="Node2D" parent="." unique_id=714172976 node_paths=PackedStringArray("fire_position_node")]
+script = ExtResource("3_g1dw6")
+projectile_scene = ExtResource("4_yw30f")
+fire_position_node = NodePath("../gun/FirePoint")

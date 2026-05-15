@@ -19,6 +19,7 @@ var velocity : Vector2
 
 func _ready() -> void:
 	direction = direction.normalized()
+	rotation = direction.angle()
 	velocity = direction * speed
 	if is_instance_valid(duration_timer) and duration > 0:
 		duration_timer.wait_time = duration

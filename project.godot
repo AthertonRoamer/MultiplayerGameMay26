@@ -28,6 +28,7 @@ enabled=PackedStringArray("res://addons/netfox.internals/plugin.cfg", "res://add
 [global_group]
 
 player=""
+damageable=""
 
 [input]
 

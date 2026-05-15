@@ -22,7 +22,7 @@ func fire() -> void:
 		
 func fire_projectile() -> void:
 	var new_projectile = set_up_projectile()
-	Main.level.get_map().add_child(new_projectile)
+	Main.mode.get_world().add_child(new_projectile)
 
 
 func get_fire_position() -> Vector2:
