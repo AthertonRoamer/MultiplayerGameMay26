@@ -1,7 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://cxb8hycll1kwn"]
+[gd_scene format=3 uid="uid://cxb8hycll1kwn"]
 
 [ext_resource type="Script" uid="uid://dbw3wa6fmav0i" path="res://projectile/standard_gun_bullet.gd" id="1_u21hw"]
-[ext_resource type="Texture2D" uid="uid://bkjc81nmv486g" path="res://assets/Projectiles.png" id="2_qbu20"]
+[ext_resource type="Texture2D" uid="uid://gqmqpaagpccm" path="res://icon.svg" id="2_u21hw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_daedc"]
 radius = 2.0
@@ -127,54 +127,49 @@ damping_max = 100.0
 scale_curve = SubResource("CurveTexture_ioued")
 color_ramp = SubResource("GradientTexture1D_ov85m")
 
-[node name="smg_bullet" type="Area2D" node_paths=PackedStringArray("duration_timer")]
+[node name="smg_bullet" type="Area2D" unique_id=1307074765 node_paths=PackedStringArray("duration_timer")]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_u21hw")
 speed = 1600.0
-damage = 2
+damage = 50
 extinguish_on_impact = true
 extinguish_on_effect_body = true
 duration_timer = NodePath("lifespan")
 duration = 10.0
 impact_knockback = 100
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=857708564]
 texture_filter = 1
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("2_qbu20")
-hframes = 8
-frame = 2
+position = Vector2(32.999996, 0)
+scale = Vector2(0.5112205, 0.10359436)
+texture = ExtResource("2_u21hw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1307927006]
 visible = false
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_daedc")
 
-[node name="lifespan" type="Timer" parent="."]
+[node name="lifespan" type="Timer" parent="." unique_id=1025881753]
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1421874080]
 visible = false
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_g0ebo")
 position = Vector2(-12, 0)
 amount = 32
-texture = ExtResource("2_qbu20")
 lifetime = 0.3
 process_material = SubResource("ParticleProcessMaterial_1brg8")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1003905372]
 visible = false
 material = SubResource("CanvasItemMaterial_61q2t")
 position = Vector2(18, 0)
-texture = ExtResource("2_qbu20")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_xhjti")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=567266448]
+libraries/ = SubResource("AnimationLibrary_xhjti")
 
-[node name="hit" type="GPUParticles2D" parent="."]
+[node name="hit" type="GPUParticles2D" parent="." unique_id=1255158750]
 z_index = 10
 z_as_relative = false
 texture_filter = 1
@@ -189,9 +184,12 @@ speed_scale = 4.0
 explosiveness = 0.75
 process_material = SubResource("ParticleProcessMaterial_54rnq")
 
-[node name="shoot" type="AudioStreamPlayer2D" parent="."]
+[node name="shoot" type="AudioStreamPlayer2D" parent="." unique_id=987911293]
 volume_db = -17.333
 autoplay = true
 max_distance = 500.0
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=452203390]
+target_position = Vector2(75, 0)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -14,6 +14,15 @@ var id : int
 @export var speed : int = 250
 var mod_manager : ModManager
 
+@export var starting_health := 100
+@export var health = starting_health:
+	set(v):
+		if v < 0:
+			health = 0
+			die()
+		else:
+			health = v
+
 func _ready():
 	name = str(id)
 	
@@ -22,6 +31,8 @@ func _ready():
 		name_display.text = player_name
 	Main.mode.lobby.member_left.connect(_on_member_left)
 	mod_manager = ModManager.new()
+	mod_manager.name = "ModManager"
+	add_child(mod_manager)
 	if local:
 		$Camera2D.enabled = true
 	
@@ -68,3 +79,26 @@ func _on_member_left(member : LobbyMember) -> void:
 		
 func pickup_mod(mod : Mod) -> void:
 	mod_manager.add_mod(mod)
+	
+	
+func _input(event: InputEvent) -> void:
+	if not local:
+		return
+	if event.is_action_pressed("fire") and not event.is_echo():
+		trigger_fire.rpc()
+		
+	
+@rpc("call_local", "reliable", "any_peer")
+func trigger_fire() -> void:
+	$ProjectileHandler.projectile_direction = Vector2.UP.rotated(gun.rotation)
+	$ProjectileHandler.mod_name_list = mod_manager.get_active_mods_names()
+	$ProjectileHandler.fire()
+	
+	
+func die() -> void:
+	queue_free()
+	
+	
+func take_damage(damage, damage_type) -> void:
+	health -= damage
+		
