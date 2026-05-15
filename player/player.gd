@@ -49,11 +49,16 @@ func _physics_process(delta) -> void:
 			gun.rotation = (get_global_mouse_position()- gun.global_position).angle() + deg_to_rad(90)
 		
 		update_position.rpc(position)
-		
+		update_rotation.rpc(gun.rotation, body.rotation)
 		
 @rpc("any_peer")
 func update_position(new_position : Vector2) -> void:
 	position = new_position
+	
+@rpc("any_peer")
+func update_rotation(gun_rotation,body_rotation):
+	gun.rotation = gun_rotation
+	body.rotation = body_rotation
 	
 	
 func _on_member_left(member : LobbyMember) -> void:
