@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://world.gd" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://bpkc11xgb7olc" path="res://player/player.tscn" id="2_aqk2v"]
 [ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="2_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item.tscn" id="4_aqk2v"]
+[ext_resource type="Resource" uid="uid://d22w1kygvj24v" path="res://mod_system/test_mod.tres" id="5_036b0"]
 
 [sub_resource type="Gradient" id="Gradient_tlwt5"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -138,6 +140,9 @@ offset_right = -0.160034
 offset_bottom = 0.127998
 text = "Quit Game"
 
+[node name="ModItem" parent="." unique_id=302346118 instance=ExtResource("4_aqk2v")]
+position = Vector2(289, 180)
+mod = ExtResource("5_036b0")
 [node name="glow" type="WorldEnvironment" parent="." unique_id=24881030]
 environment = SubResource("Environment_tlwt5")
 

@@ -12,26 +12,30 @@ var id : int
 @export var active : bool = false
 
 @export var speed : int = 250
+var mod_manager : ModManager
 
 func _ready():
 	name = str(id)
-	name_display.text = player_name
+	
 	local = id == multiplayer.get_unique_id()
+	if not local:
+		name_display.text = player_name
 	Main.mode.lobby.member_left.connect(_on_member_left)
+	mod_manager = ModManager.new()
 	if local:
 		$Camera2D.enabled = true
 	
 	
-func _physics_process(_delta) -> void:
+func _physics_process(delta) -> void:
 	if active and local:
 		var vel : Vector2 = Vector2.ZERO
-		if Input.is_action_pressed("ui_up"):
+		if Input.is_action_pressed("player_up"):
 			vel.y -= 1
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed("player_down"):
 			vel.y += 1
-		if Input.is_action_pressed("ui_left"):
+		if Input.is_action_pressed("player_left"):
 			vel.x -= 1
-		if Input.is_action_pressed("ui_right"):
+		if Input.is_action_pressed("player_right"):
 			vel.x += 1
 		
 		if vel.length() > 0:
@@ -55,3 +59,7 @@ func update_position(new_position : Vector2) -> void:
 func _on_member_left(member : LobbyMember) -> void:
 	if member.id == id:
 		queue_free()
+		
+		
+func pickup_mod(mod : Mod) -> void:
+	mod_manager.add_mod(mod)

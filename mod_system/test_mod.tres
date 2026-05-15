@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Mod" format=3 uid="uid://d22w1kygvj24v"]
+
+[ext_resource type="Script" uid="uid://ix2vusixqn1r" path="res://mod_system/mod.gd" id="1_oxhvx"]
+
+[resource]
+script = ExtResource("1_oxhvx")
+name = "health"
+type = "tank"
+metadata/_custom_type_script = "uid://ix2vusixqn1r"

@@ -6,7 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 14.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1464612858 node_paths=PackedStringArray("name_display", "gun", "body")]
+
+[node name="Player" type="CharacterBody2D" unique_id=2022898897 node_paths=PackedStringArray("name_display", "gun", "body") groups=["player"]]
 position = Vector2(1, 0)
 motion_mode = 1
 script = ExtResource("1_rkbax")
