@@ -6,19 +6,19 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8330"]
 size = Vector2(64, 64)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("name_display")]
+[node name="Player" type="CharacterBody2D" unique_id=2022898897 node_paths=PackedStringArray("name_display") groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_rkbax")
 name_display = NodePath("NameDisplay")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2041853847]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_g1dw6")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1185738867]
 shape = SubResource("RectangleShape2D_b8330")
 
-[node name="NameDisplay" type="Label" parent="."]
+[node name="NameDisplay" type="Label" parent="." unique_id=363641633]
 offset_left = -33.0
 offset_top = -66.0
 offset_right = 31.0
