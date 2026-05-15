@@ -5,6 +5,9 @@ var player_name : String = "Player"
 var id : int
 @export var name_display : Label 
 
+@export var gun : Node2D
+@export var body : Node2D
+
 @export var local : bool = false #this player node is running on the player who controls it
 @export var active : bool = false
 
@@ -19,6 +22,8 @@ func _ready():
 		name_display.text = player_name
 	Main.mode.lobby.member_left.connect(_on_member_left)
 	mod_manager = ModManager.new()
+	if local:
+		$Camera2D.enabled = true
 	
 	
 func _physics_process(delta) -> void:
@@ -33,9 +38,16 @@ func _physics_process(delta) -> void:
 		if Input.is_action_pressed("player_right"):
 			vel.x += 1
 		
-		vel = vel.normalized()
+		if vel.length() > 0:
+			vel = vel.normalized()
+			body.rotation = vel.angle() + deg_to_rad(90)
+			
 		velocity = vel * speed
 		move_and_slide()
+		
+		if gun:
+			gun.rotation = (get_global_mouse_position()- gun.global_position).angle() + deg_to_rad(90)
+		
 		update_position.rpc(position)
 		
 		
