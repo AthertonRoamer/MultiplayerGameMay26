@@ -37,3 +37,10 @@ func launch_server() -> void:
 	Network.port = lobby.stats.lobby_port
 	Network.max_clients = lobby.stats.max_members
 	Network.initiate_enet_server()
+	
+	
+func get_world() -> Node:
+	if lobby.game_manager.has_method("get_game"):
+		return lobby.game_manager.get_game()
+	else:
+		return null

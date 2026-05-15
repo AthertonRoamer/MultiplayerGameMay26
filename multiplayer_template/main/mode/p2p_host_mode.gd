@@ -145,3 +145,10 @@ func _on_disconnected_to_server() -> void:
 				lobby.end_game()
 			Network.port = Main.main.configuration.server_port
 	state = CLIENT_STATE.NOT_CONNECTED
+	
+	
+func get_world() -> Node:
+	if lobby.game_manager.has_method("get_game"):
+		return lobby.game_manager.get_game()
+	else:
+		return null
