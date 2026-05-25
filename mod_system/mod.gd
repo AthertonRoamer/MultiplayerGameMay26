@@ -10,4 +10,6 @@ var active : bool = true:
 		active_changed.emit(self, b)
 
 @export_enum("gun", "tank") var type : String = "gun"
+@export var description : String = "A mod that has some awesome effect"
 @export var texture : Texture2D = preload("res://icon.svg")
+@export var menu_texture : Texture2D = preload("res://icon.svg")

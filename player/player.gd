@@ -17,11 +17,13 @@ var mod_manager : ModManager
 @export var starting_health := 100
 @export var health = starting_health:
 	set(v):
-		if v < 0:
+		if v <= 0:
 			health = 0
 			die()
 		else:
 			health = v
+			
+@export var mod_item_scene : PackedScene
 
 func _ready():
 	name = str(id)
@@ -37,7 +39,7 @@ func _ready():
 		$Camera2D.enabled = true
 	
 	
-func _physics_process(delta) -> void:
+func _physics_process(_delta) -> void:
 	if active and local:
 		var vel : Vector2 = Vector2.ZERO
 		if Input.is_action_pressed("player_up"):
@@ -78,10 +80,20 @@ func _on_member_left(member : LobbyMember) -> void:
 		
 		
 func pickup_mod(mod : Mod) -> void:
+	mod.active = true
 	mod_manager.add_mod(mod)
 	
 	
-func _input(event: InputEvent) -> void:
+func drop_mod(mod : Mod) -> void:
+	mod_manager.remove_mod(mod)
+	var mod_item : ModItem = mod_item_scene.instantiate()
+	mod_item.mod = mod
+	mod_item.global_position = global_position
+	Main.mode.get_world().get_node("ModItems").add_child(mod_item)
+	
+	
+	
+func _unhandled_input(event: InputEvent) -> void:
 	if not local:
 		return
 	if event.is_action_pressed("fire") and not event.is_echo():
@@ -96,9 +108,16 @@ func trigger_fire() -> void:
 	
 	
 func die() -> void:
-	queue_free()
+	if multiplayer.is_server():
+		$NetworkUnloader.initiate_unload()
+		
 	
 	
-func take_damage(damage, damage_type) -> void:
+func take_damage(damage, _damage_type) -> void:
 	health -= damage
 		
+
+
+func _on_network_unloader_cease_rpcs_request_received() -> void:
+	active = false
+	$NetworkUnloader.register_as_ceased()
