@@ -1,20 +1,22 @@
 [gd_scene format=3 uid="uid://bpkc11xgb7olc"]
 
 [ext_resource type="Script" uid="uid://bl4ves5dbgto4" path="res://player/player.gd" id="1_rkbax"]
+[ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item.tscn" id="2_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://bnwxo7j5qye0o" path="res://art/Tank.png" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://dqgatjwsjkj2x" path="res://player/player_projectile_handler.gd" id="3_g1dw6"]
 [ext_resource type="PackedScene" uid="uid://cxb8hycll1kwn" path="res://projectile/smg_bullet.tscn" id="4_yw30f"]
+[ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="5_qjkh3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 14.0
 
 [node name="Player" type="CharacterBody2D" unique_id=2022898897 node_paths=PackedStringArray("name_display", "gun", "body") groups=["damageable", "player"]]
-position = Vector2(1, 0)
 motion_mode = 1
 script = ExtResource("1_rkbax")
 name_display = NodePath("NameDisplay")
 gun = NodePath("gun")
 body = NodePath("tank")
+mod_item_scene = ExtResource("2_g6k8r")
 
 [node name="tank" type="Sprite2D" parent="." unique_id=814488435]
 unique_name_in_owner = true
@@ -60,3 +62,9 @@ enabled = false
 script = ExtResource("3_g1dw6")
 projectile_scene = ExtResource("4_yw30f")
 fire_position_node = NodePath("../gun/FirePoint")
+
+[node name="NetworkUnloader" type="Node" parent="." unique_id=2113159542]
+script = ExtResource("5_qjkh3")
+metadata/_custom_type_script = "uid://bhuu3dcyyuuys"
+
+[connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]

@@ -4,6 +4,8 @@ extends Node
 @export var available_mods : Array[Mod]
 
 signal mod_active_changed(m : Mod, b : bool)
+signal mod_added(m : Mod)
+signal mod_removed(m : Mod)
 
 var mods : Array[Mod] = []:
 	get():
@@ -52,6 +54,7 @@ func add_mod(mod) -> bool:
 					m.active_changed.connect(_on_mod_active_changed)
 					if get_parent().local:
 						trigger_add_mod.rpc(m.name)
+					mod_added.emit(m)
 					return true
 				else:
 					return false
@@ -62,6 +65,7 @@ func add_mod(mod) -> bool:
 					m.active_changed.connect(_on_mod_active_changed)
 					if get_parent().local:
 						trigger_add_mod.rpc(m.name)
+					mod_added.emit(m)
 					return true
 				else:
 					return false
@@ -101,6 +105,7 @@ func remove_mod(mod):
 				mod_to_delete = m 
 		if mod_to_delete != null:
 			mod_array.erase(mod_to_delete)
+			mod_removed.emit(mod_to_delete)
 			if get_parent().local:
 				trigger_remove_mod.rpc(mod_to_delete.name)
 		

@@ -20,7 +20,7 @@ func _ready() -> void:
 	body_exited.connect(_update_highlight)
 	
 	sprite.modulate = normal_modulate
-
+	_update_highlight(null)
 
 func _process(_delta: float) -> void:
 	if _picked_up:
@@ -39,7 +39,7 @@ func _process(_delta: float) -> void:
 			rpc("destroy_pickup")
 
 
-func _update_highlight(_body: Node) -> void:
+func _update_highlight(_body) -> void:
 	if _picked_up:
 		sprite.modulate = normal_modulate
 		return

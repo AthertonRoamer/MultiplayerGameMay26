@@ -52,10 +52,9 @@ func _ready() -> void:
 	stats.changed.connect(_on_stats_changed)
 	
 	if is_master:
+		@warning_ignore("redundant_await")
 		await (Main.mode as LobbyMode).launch_server()
 		
-	
-	
 	
 func parse_args() -> void:
 	if Main.has_arg_option("--lobby-port"):
@@ -245,7 +244,7 @@ func trigger_request_begin_game() -> void: #from client to server
 	request_begin_game.rpc_id(1)
 
 
-@rpc("reliable", "any_peer")
+@rpc("reliable", "any_peer", "call_local")
 func request_begin_game() -> void:
 	if is_master:
 		if is_member_authority(multiplayer.get_remote_sender_id()):

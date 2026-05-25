@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://mrd4ur52j5a2"]
+
+[ext_resource type="Script" uid="uid://b6ojer6rp2lpk" path="res://mod_system/mod_menu/mod_display.gd" id="1_hkmfk"]
+[ext_resource type="Script" uid="uid://bsfqv4s6cape" path="res://mod_system/mod_menu/button.gd" id="2_0n3ys"]
+
+[node name="ModDisplay" type="VBoxContainer" unique_id=1696130027]
+script = ExtResource("1_hkmfk")
+
+[node name="Button" type="Button" parent="." unique_id=1316827160]
+layout_mode = 2
+script = ExtResource("2_0n3ys")
+
+[node name="Label" type="Label" parent="." unique_id=1798448037]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed_left_click" from="Button" to="." method="_on_button_pressed_left_click"]
+[connection signal="pressed_right_click" from="Button" to="." method="_on_button_pressed_right_click"]

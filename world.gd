@@ -1,9 +1,12 @@
 class_name World
 extends Node2D
 
-var players : Array = []
+signal game_loaded(local_player : Player)
+
+var players : Array[Player] = []
 var first_pos : Vector2 = Vector2(100, 100)
 @export var player_scene : PackedScene 
+var local_player : Player
 
 func _ready() -> void:
 	if get_parent() is GameManager:
@@ -12,8 +15,12 @@ func _ready() -> void:
 		if get_parent().lobby.is_master:
 			visible = false
 			$"CanvasLayer/Quit Game".visible = false
-
-
+		for p in players:
+			if p.local:
+				local_player = p
+		game_loaded.emit(local_player)
+				
+				
 func start() -> void:
 	set_players_active(true)
 		
