@@ -12,7 +12,7 @@ var id : int
 @export var active : bool = false
 
 @export var speed : int = 250
-var mod_manager : ModManager
+@onready var mod_manager : ModManager = $ModManager
 
 @export var starting_energy : float = 0
 @export var energy : float = starting_energy
@@ -37,9 +37,6 @@ func _ready():
 	if not local:
 		name_display.text = player_name
 	Main.mode.lobby.member_left.connect(_on_member_left)
-	mod_manager = ModManager.new()
-	mod_manager.name = "ModManager"
-	add_child(mod_manager)
 	if local:
 		$Camera2D.enabled = true
 		
@@ -94,13 +91,20 @@ func pickup_mod(mod : Mod) -> void:
 	mod_manager.add_mod(mod)
 	
 	
-func drop_mod(mod : Mod) -> void:
-	mod_manager.remove_mod(mod)
-	var mod_item : ModItem = mod_item_scene.instantiate()
-	mod_item.mod = mod
-	mod_item.global_position = global_position
-	Main.mode.get_world().get_node("ModItems").add_child(mod_item)
+func trigger_drop_mod(mod_name : String) -> void:
+	drop_mod.rpc(mod_name)
 	
+	
+@rpc("any_peer", "reliable", "call_local")
+func drop_mod(mod) -> void:
+	if mod is String:
+		drop_mod(mod_manager.get_mod_from_name(mod))
+	elif mod is Mod:
+		mod_manager.remove_mod(mod)
+		var mod_item : ModItem = mod_item_scene.instantiate()
+		mod_item.mod = mod
+		mod_item.global_position = global_position
+		Main.mode.get_world().get_node("ModItems").add_child(mod_item)
 	
 	
 func _unhandled_input(event: InputEvent) -> void:
@@ -131,3 +135,7 @@ func take_damage(damage, _damage_type) -> void:
 func _on_network_unloader_cease_rpcs_request_received() -> void:
 	active = false
 	$NetworkUnloader.register_as_ceased()
+	
+	
+func has_mod(mod_name : String) -> bool:
+	return mod_manager.get_active_mods_names().has(mod_name)

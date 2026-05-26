@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dqgatjwsjkj2x" path="res://player/player_projectile_handler.gd" id="3_g1dw6"]
 [ext_resource type="PackedScene" uid="uid://cxb8hycll1kwn" path="res://projectile/smg_bullet.tscn" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="5_qjkh3"]
+[ext_resource type="PackedScene" uid="uid://dnr2e5f1xnagx" path="res://mod_system/mod_manager.tscn" id="7_boad6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 14.0
@@ -66,5 +67,7 @@ fire_position_node = NodePath("../gun/FirePoint")
 [node name="NetworkUnloader" type="Node" parent="." unique_id=2113159542]
 script = ExtResource("5_qjkh3")
 metadata/_custom_type_script = "uid://bhuu3dcyyuuys"
+
+[node name="ModManager" parent="." unique_id=1560201079 instance=ExtResource("7_boad6")]
 
 [connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]
