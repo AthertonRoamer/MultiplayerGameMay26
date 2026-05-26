@@ -27,4 +27,4 @@ func _on_button_pressed_left_click() -> void:
 
 
 func _on_button_pressed_right_click() -> void:
-	local_player.drop_mod(mod)
+	local_player.trigger_drop_mod(mod.name)

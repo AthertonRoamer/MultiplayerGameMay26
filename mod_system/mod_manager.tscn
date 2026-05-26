@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dnr2e5f1xnagx"]
+
+[ext_resource type="Script" uid="uid://bkfql4747o0u2" path="res://mod_system/mod_manager.gd" id="1_h2bfc"]
+[ext_resource type="Script" uid="uid://ix2vusixqn1r" path="res://mod_system/mod.gd" id="2_2c2mm"]
+[ext_resource type="Resource" uid="uid://foo0u4vvefm0" path="res://mod_system/mods/shield.tres" id="3_0384x"]
+[ext_resource type="Resource" uid="uid://trntqnmksra1" path="res://mod_system/mods/boost.tres" id="4_7up5g"]
+
+[node name="ModManager" type="Node" unique_id=1560201079]
+script = ExtResource("1_h2bfc")
+available_mods = Array[ExtResource("2_2c2mm")]([ExtResource("3_0384x"), ExtResource("4_7up5g")])

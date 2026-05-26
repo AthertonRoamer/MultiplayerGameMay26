@@ -5,6 +5,8 @@
 
 [node name="ModDisplay" type="VBoxContainer" unique_id=1696130027]
 script = ExtResource("1_hkmfk")
+inactive_modulate = null
+active_modulate = null
 
 [node name="Button" type="Button" parent="." unique_id=1316827160]
 layout_mode = 2
