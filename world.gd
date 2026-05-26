@@ -8,11 +8,14 @@ var first_pos : Vector2 = Vector2(100, 100)
 @export var player_scene : PackedScene 
 var local_player : Player
 
+var game_manager
+
 func _ready() -> void:
-	if get_parent() is GameManager:
-		for member in get_parent().lobby.members:
+	game_manager = get_parent()
+	if game_manager is GameManager:
+		for member in game_manager.lobby.members:
 			load_player(member)
-		if get_parent().lobby.is_master:
+		if game_manager.lobby.is_master:
 			visible = false
 			$"CanvasLayer/Quit Game".visible = false
 		for p in players:

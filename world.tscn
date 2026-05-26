@@ -3,10 +3,13 @@
 [ext_resource type="Script" uid="uid://c3bov7eeeqba6" path="res://world.gd" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://bpkc11xgb7olc" path="res://player/player.tscn" id="2_aqk2v"]
 [ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="2_tlwt5"]
-[ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item.tscn" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item/mod_item.tscn" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://cddvdi56f54he" path="res://mod_system/mod_menu/mod_menu.gd" id="4_dwbse"]
 [ext_resource type="PackedScene" uid="uid://mrd4ur52j5a2" path="res://mod_system/mod_menu/mod_display.tscn" id="5_dwbse"]
-[ext_resource type="Resource" uid="uid://trntqnmksra1" path="res://mod_system/boost.tres" id="7_pkg7o"]
+[ext_resource type="Script" uid="uid://clr6f268kjju8" path="res://hud/energy_display/energy_display.gd" id="6_ioo17"]
+[ext_resource type="Resource" uid="uid://trntqnmksra1" path="res://mod_system/mods/boost.tres" id="7_pkg7o"]
+[ext_resource type="Texture2D" uid="uid://gqmqpaagpccm" path="res://icon.svg" id="7_wse8f"]
+[ext_resource type="Resource" uid="uid://foo0u4vvefm0" path="res://mod_system/mods/shield.tres" id="8_gbfbk"]
 
 [sub_resource type="Gradient" id="Gradient_tlwt5"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -174,15 +177,47 @@ text = "Gun"
 [node name="GunModContainer" type="HBoxContainer" parent="CanvasLayer/ModMenu/GunMods" unique_id=749039437]
 layout_mode = 2
 
+[node name="EnergyDisplay" type="HBoxContainer" parent="CanvasLayer" unique_id=1945892806]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.864
+anchor_right = 0.5
+anchor_bottom = 0.864
+offset_left = -151.0
+offset_top = 0.12799072
+offset_right = 154.0
+offset_bottom = 45.12799
+script = ExtResource("6_ioo17")
+
+[node name="Label" type="Label" parent="CanvasLayer/EnergyDisplay" unique_id=828844990]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/EnergyDisplay" unique_id=1103036499]
+layout_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/EnergyDisplay" unique_id=1722526568]
+layout_mode = 2
+step = 0.1
+texture_progress = ExtResource("7_wse8f")
+
 [node name="ModItems" type="Node2D" parent="." unique_id=236705776]
 
 [node name="ModItem" parent="ModItems" unique_id=302346118 instance=ExtResource("4_aqk2v")]
 position = Vector2(289, 180)
 mod = ExtResource("7_pkg7o")
 
+[node name="ModItem2" parent="ModItems" unique_id=575309924 instance=ExtResource("4_aqk2v")]
+position = Vector2(395, 118)
+mod = ExtResource("7_pkg7o")
+
+[node name="ModItem3" parent="ModItems" unique_id=1547247017 instance=ExtResource("4_aqk2v")]
+position = Vector2(302, 295)
+mod = ExtResource("8_gbfbk")
+
 [node name="glow" type="WorldEnvironment" parent="." unique_id=24881030]
 environment = SubResource("Environment_tlwt5")
 
 [connection signal="game_loaded" from="." to="CanvasLayer/ModMenu" method="_on_world_game_loaded"]
+[connection signal="game_loaded" from="." to="CanvasLayer/EnergyDisplay" method="_on_world_game_loaded"]
 [connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]
 [connection signal="pressed" from="CanvasLayer/Quit Game" to="." method="_on_quit_game_pressed"]

@@ -14,6 +14,11 @@ var id : int
 @export var speed : int = 250
 var mod_manager : ModManager
 
+@export var starting_energy : float = 0
+@export var energy : float = starting_energy
+@export var energy_increase_rate : float = 1 #energy per second
+@export var energy_max : float = 10
+
 @export var starting_health := 100
 @export var health = starting_health:
 	set(v):
@@ -37,7 +42,12 @@ func _ready():
 	add_child(mod_manager)
 	if local:
 		$Camera2D.enabled = true
-	
+		
+		
+func _process(delta: float) -> void:
+	energy += energy_increase_rate * delta
+	energy = max(0, energy)
+	energy = min(energy_max, energy)
 	
 func _physics_process(_delta) -> void:
 	if active and local:
