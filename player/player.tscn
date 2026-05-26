@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpkc11xgb7olc"]
 
 [ext_resource type="Script" uid="uid://bl4ves5dbgto4" path="res://player/player.gd" id="1_rkbax"]
-[ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item.tscn" id="2_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item/mod_item.tscn" id="2_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://bnwxo7j5qye0o" path="res://art/Tank.png" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://dqgatjwsjkj2x" path="res://player/player_projectile_handler.gd" id="3_g1dw6"]
 [ext_resource type="PackedScene" uid="uid://cxb8hycll1kwn" path="res://projectile/smg_bullet.tscn" id="4_yw30f"]

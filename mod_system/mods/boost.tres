@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Mod" format=3 uid="uid://trntqnmksra1"]
+
+[ext_resource type="Texture2D" uid="uid://swreuvlg4415" path="res://art/filler_art/filler_mod1.png" id="1_4bcus"]
+[ext_resource type="Script" uid="uid://ix2vusixqn1r" path="res://mod_system/mod.gd" id="2_rv6d8"]
+
+[resource]
+script = ExtResource("2_rv6d8")
+name = "boost"
+type = "tank"
+texture = ExtResource("1_4bcus")
+menu_texture = ExtResource("1_4bcus")
+metadata/_custom_type_script = "uid://ix2vusixqn1r"
