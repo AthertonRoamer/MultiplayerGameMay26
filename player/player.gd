@@ -40,8 +40,9 @@ func _ready():
 	if local:
 		$Camera2D.enabled = true
 	($ModMenu as ModMenu).set_up_local_player(self)
-		
-		
+	health = starting_health
+	
+	
 func _process(delta: float) -> void:
 	energy += energy_increase_rate * delta
 	energy = max(0, energy)

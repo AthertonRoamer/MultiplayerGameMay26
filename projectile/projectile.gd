@@ -33,6 +33,7 @@ func _ready() -> void:
 			extinguish()
 	
 	
+	
 func _on_body_entered(body : Node2D) -> void:
 	if not hit_entities.has(body) and body != wielder:
 		effect_body(body)

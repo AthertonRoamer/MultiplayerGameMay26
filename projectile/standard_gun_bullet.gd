@@ -34,6 +34,8 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	
 	
 func effect_body(body : Node2D) -> void:
+	if dying:
+		return
 	var extinguish_triggered : bool = false
 	if body.is_in_group("damageable") and body != wielder:
 
