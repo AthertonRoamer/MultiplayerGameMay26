@@ -39,6 +39,7 @@ func _ready():
 	Main.mode.lobby.member_left.connect(_on_member_left)
 	if local:
 		$Camera2D.enabled = true
+	($ModMenu as ModMenu).set_up_local_player(self)
 		
 		
 func _process(delta: float) -> void:
@@ -86,9 +87,9 @@ func _on_member_left(member : LobbyMember) -> void:
 		queue_free()
 		
 		
-func pickup_mod(mod : Mod) -> void:
+func pickup_mod(mod : Mod) -> bool:
 	mod.active = true
-	mod_manager.add_mod(mod)
+	return mod_manager.add_mod(mod)
 	
 	
 func trigger_drop_mod(mod_name : String) -> void:
@@ -117,7 +118,7 @@ func _unhandled_input(event: InputEvent) -> void:
 @rpc("call_local", "reliable", "any_peer")
 func trigger_fire() -> void:
 	$ProjectileHandler.projectile_direction = Vector2.UP.rotated(gun.rotation)
-	$ProjectileHandler.mod_name_list = mod_manager.get_active_mods_names()
+	#$ProjectileHandler.mod_name_list = mod_manager.get_active_mods_names()
 	$ProjectileHandler.fire()
 	
 	
@@ -139,3 +140,7 @@ func _on_network_unloader_cease_rpcs_request_received() -> void:
 	
 func has_mod(mod_name : String) -> bool:
 	return mod_manager.get_active_mods_names().has(mod_name)
+	
+	
+func get_mod_count(mod_name : String) -> int:
+	return mod_manager.get_mod_count_by_name(mod_name)

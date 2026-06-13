@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://2wvupn4f8h25"]
+
+[ext_resource type="Script" uid="uid://cddvdi56f54he" path="res://mod_system/mod_menu/mod_menu.gd" id="1_hat5g"]
+[ext_resource type="PackedScene" uid="uid://mrd4ur52j5a2" path="res://mod_system/mod_menu/mod_display.tscn" id="2_o1a06"]
+
+[node name="ModMenu" type="HBoxContainer" unique_id=1867955772 node_paths=PackedStringArray("tank_mod_holder", "gun_mod_holder")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hat5g")
+tank_mod_holder = NodePath("TankMods/TankModContainer")
+gun_mod_holder = NodePath("GunMods/GunModContainer")
+mod_display_scene = ExtResource("2_o1a06")
+
+[node name="TankMods" type="VBoxContainer" parent="." unique_id=1187213833]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TankMods" unique_id=1828374375]
+layout_mode = 2
+text = "Tank"
+
+[node name="TankModContainer" type="HBoxContainer" parent="TankMods" unique_id=64644581]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="." unique_id=273419341]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="GunMods" type="VBoxContainer" parent="." unique_id=1378577121]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GunMods" unique_id=550902958]
+layout_mode = 2
+text = "Gun"
+
+[node name="GunModContainer" type="HBoxContainer" parent="GunMods" unique_id=724073742]
+layout_mode = 2

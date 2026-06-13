@@ -22,7 +22,7 @@ func _on_mod_active_changed(_m : Mod, active : bool) -> void:
 
 
 func _on_button_pressed_left_click() -> void:
-	mod.active= not mod.active
+	mod.active = not mod.active
 	$Button.accept_event()
 
 

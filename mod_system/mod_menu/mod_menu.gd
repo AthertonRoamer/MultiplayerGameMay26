@@ -7,6 +7,10 @@ var local_player : Player
 @export var mod_display_scene : PackedScene
 
 func _on_world_game_loaded(l_player: Player) -> void:
+	set_up_local_player(l_player)
+	
+	
+func set_up_local_player(l_player : Player) -> void:
 	local_player = l_player
 	local_player.mod_manager.mod_added.connect(_on_mod_added)
 	local_player.mod_manager.mod_removed.connect(_on_mod_removed)
