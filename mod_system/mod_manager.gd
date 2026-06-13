@@ -1,6 +1,7 @@
 class_name ModManager
 extends Node
 
+@export var player : Player
 @export var available_mods : Array[Mod]
 
 signal mod_active_changed(m : Mod, b : bool)
@@ -13,8 +14,8 @@ var mods : Array[Mod] = []:
 		mods.append_array(gun_mods)
 		return mods
 		
-var max_tank_mods : int = 3
-var max_gun_mods : int = 4
+@export var max_tank_mods : int = 3
+@export var max_gun_mods : int = 4
 var tank_mods : Array[Mod] = []
 var gun_mods : Array[Mod] = []
 
@@ -34,6 +35,10 @@ func get_active_mods_names() -> Array[String]:
 	return results
 	
 	
+func get_mod_count_by_name(mod_name : String) -> int:
+	return get_active_mods_names().count(mod_name)
+	
+	
 func get_unactive_mods() -> Array[Mod]:
 	return mods.filter(func(x) : return not x.active)
 	
@@ -41,6 +46,7 @@ func get_unactive_mods() -> Array[Mod]:
 @rpc("any_peer", "reliable")
 func trigger_add_mod(mod_name : String) -> void:
 	add_mod(mod_name)
+
 
 func add_mod(mod) -> bool:
 	if mod is String:
@@ -76,12 +82,20 @@ func add_mod(mod) -> bool:
 		return false
 		
 		
-func get_mod_from_name(mod_name : String) -> Mod:
+func get_mod_from_name(mod_name : String) -> Mod: #returns mod resource from available mods
 	var result : Mod = null
 	for mod in available_mods:
 		if mod.name == mod_name:
 			result = mod
 	return result
+	
+	
+func get_actual_mod_from_name(mod_name : String) -> Mod: #returns a mod resource from mod list
+	var mod : Mod = null
+	for m in mods:
+		if m.name == mod_name:
+			mod = m 
+	return mod
 	
 	
 @rpc("any_peer", "reliable")
@@ -112,6 +126,15 @@ func remove_mod(mod):
 		
 func _on_mod_active_changed(m : Mod, b : bool) -> void:
 	mod_active_changed.emit(m, b)
+	if player.local:
+		update_mod_active.rpc(m.name, b)
+	
+	
+@rpc("any_peer")
+func update_mod_active(mod_name : String, b : bool) -> void:
+	var mod : Mod = get_actual_mod_from_name(mod_name)
+	if mod != null:
+		mod.active = b
 	
 	
 func get_active_mod_count(mod_name : String) -> bool:

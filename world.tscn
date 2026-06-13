@@ -4,8 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bpkc11xgb7olc" path="res://player/player.tscn" id="2_aqk2v"]
 [ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bryqsg4ny4tmy" path="res://mod_system/mod_item/mod_item.tscn" id="4_aqk2v"]
-[ext_resource type="Script" uid="uid://cddvdi56f54he" path="res://mod_system/mod_menu/mod_menu.gd" id="4_dwbse"]
-[ext_resource type="PackedScene" uid="uid://mrd4ur52j5a2" path="res://mod_system/mod_menu/mod_display.tscn" id="5_dwbse"]
+[ext_resource type="PackedScene" uid="uid://2wvupn4f8h25" path="res://mod_system/mod_menu/mod_menu.tscn" id="4_ioo17"]
 [ext_resource type="Script" uid="uid://clr6f268kjju8" path="res://hud/energy_display/energy_display.gd" id="6_ioo17"]
 [ext_resource type="Resource" uid="uid://trntqnmksra1" path="res://mod_system/mods/boost.tres" id="7_pkg7o"]
 [ext_resource type="Texture2D" uid="uid://gqmqpaagpccm" path="res://icon.svg" id="7_wse8f"]
@@ -145,37 +144,7 @@ offset_right = -0.160034
 offset_bottom = 0.127998
 text = "Quit Game"
 
-[node name="ModMenu" type="HBoxContainer" parent="CanvasLayer" unique_id=246002392 node_paths=PackedStringArray("tank_mod_holder", "gun_mod_holder")]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("4_dwbse")
-tank_mod_holder = NodePath("TankMods/TankModContainer")
-gun_mod_holder = NodePath("GunMods/GunModContainer")
-mod_display_scene = ExtResource("5_dwbse")
-
-[node name="TankMods" type="VBoxContainer" parent="CanvasLayer/ModMenu" unique_id=1518466360]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/ModMenu/TankMods" unique_id=480761648]
-layout_mode = 2
-text = "Tank"
-
-[node name="TankModContainer" type="HBoxContainer" parent="CanvasLayer/ModMenu/TankMods" unique_id=659067656]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="CanvasLayer/ModMenu" unique_id=600826926]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-
-[node name="GunMods" type="VBoxContainer" parent="CanvasLayer/ModMenu" unique_id=922358495]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/ModMenu/GunMods" unique_id=546667376]
-layout_mode = 2
-text = "Gun"
-
-[node name="GunModContainer" type="HBoxContainer" parent="CanvasLayer/ModMenu/GunMods" unique_id=749039437]
-layout_mode = 2
+[node name="ModMenu" parent="CanvasLayer" unique_id=1867955772 instance=ExtResource("4_ioo17")]
 
 [node name="EnergyDisplay" type="HBoxContainer" parent="CanvasLayer" unique_id=1945892806]
 anchors_preset = -1
@@ -214,10 +183,14 @@ mod = ExtResource("7_pkg7o")
 position = Vector2(302, 295)
 mod = ExtResource("8_gbfbk")
 
+[node name="ModItem4" parent="ModItems" unique_id=155656870 instance=ExtResource("4_aqk2v")]
+position = Vector2(326, 407)
+mod = ExtResource("8_gbfbk")
+
 [node name="glow" type="WorldEnvironment" parent="." unique_id=24881030]
 environment = SubResource("Environment_tlwt5")
 
-[connection signal="game_loaded" from="." to="CanvasLayer/ModMenu" method="_on_world_game_loaded"]
 [connection signal="game_loaded" from="." to="CanvasLayer/EnergyDisplay" method="_on_world_game_loaded"]
+[connection signal="game_loaded" from="." to="CanvasLayer/ModMenu" method="_on_world_game_loaded"]
 [connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]
 [connection signal="pressed" from="CanvasLayer/Quit Game" to="." method="_on_quit_game_pressed"]

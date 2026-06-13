@@ -33,10 +33,9 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed(pickup_action):
 		if local_player.has_method("pickup_mod"):
-			local_player.pickup_mod(mod)
-			
-			_picked_up = true
-			rpc("destroy_pickup")
+			if local_player.pickup_mod(mod):
+				_picked_up = true
+				rpc("destroy_pickup")
 
 
 func _update_highlight(_body) -> void:

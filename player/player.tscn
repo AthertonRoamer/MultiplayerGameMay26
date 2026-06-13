@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cxb8hycll1kwn" path="res://projectile/smg_bullet.tscn" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="5_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://dnr2e5f1xnagx" path="res://mod_system/mod_manager.tscn" id="7_boad6"]
+[ext_resource type="PackedScene" uid="uid://2wvupn4f8h25" path="res://mod_system/mod_menu/mod_menu.tscn" id="8_rgyib"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 14.0
@@ -63,11 +64,21 @@ enabled = false
 script = ExtResource("3_g1dw6")
 projectile_scene = ExtResource("4_yw30f")
 fire_position_node = NodePath("../gun/FirePoint")
+cool_down_required = true
+cool_down_time = 0.4
 
 [node name="NetworkUnloader" type="Node" parent="." unique_id=2113159542]
 script = ExtResource("5_qjkh3")
 metadata/_custom_type_script = "uid://bhuu3dcyyuuys"
 
-[node name="ModManager" parent="." unique_id=1560201079 instance=ExtResource("7_boad6")]
+[node name="ModManager" parent="." unique_id=1560201079 node_paths=PackedStringArray("player") instance=ExtResource("7_boad6")]
+player = NodePath("..")
+
+[node name="ModMenu" parent="." unique_id=1867955772 instance=ExtResource("8_rgyib")]
+visible = false
+offset_left = -44.0
+offset_top = 21.0
+offset_right = 44.0
+offset_bottom = 61.0
 
 [connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]
