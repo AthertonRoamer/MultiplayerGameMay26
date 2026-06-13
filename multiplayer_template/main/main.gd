@@ -90,8 +90,9 @@ func _ready() -> void:
 	Network.server_browser.broadcast_port = configuration.broadcast_port
 
 	
-	Main.parse_arguments()
+	
 	load_menu()
+	Main.parse_arguments()
 	Main.output("arguments:   " + str(arg_dictionary))
 	if Main.mode != null and Main.mode.id != "none" and !Main.mode.is_open:
 		Main.mode.open()

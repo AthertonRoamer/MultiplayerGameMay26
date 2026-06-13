@@ -16,7 +16,7 @@ script = ExtResource("8_2oxh0")
 menu_scene = ExtResource("2_e8wja")
 lobby_scene = ExtResource("3_sipkh")
 lobby_stats_script = ExtResource("8_vpcrk")
-lobby_args = Array[String](["--mode lobby", "--debug-menu", "--headless"])
+lobby_args = Array[String](["--mode noray_lobby", "--debug-menu"])
 game_scene = ExtResource("4_vpcrk")
 
 [node name="Main" type="Node" unique_id=1460359677]
