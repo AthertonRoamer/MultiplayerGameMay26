@@ -31,7 +31,7 @@ func launch_lobby() -> void:
 	full_lobby_args.append(get_port_arg())
 	if Main.mode.has_method("get_additional_lobby_args"):
 		full_lobby_args.append_array(Main.mode.get_additional_lobby_args())
-	print(full_lobby_args)
+	print("Launching lobby with these args: ", full_lobby_args)
 	Main.instance_launcher.launch_instance(full_lobby_args)
 	#
 	#

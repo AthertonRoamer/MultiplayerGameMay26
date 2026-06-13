@@ -50,10 +50,11 @@ func _ready() -> void:
 	Network.server_disconnected.connect(_on_server_disconnected)
 	
 	stats.changed.connect(_on_stats_changed)
-	
+	Main.output("Before launch server")
 	if is_master:
 		@warning_ignore("redundant_await")
 		await (Main.mode as LobbyMode).launch_server()
+	Main.output("After launch server")
 		
 	
 func parse_args() -> void:

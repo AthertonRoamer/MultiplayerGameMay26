@@ -87,6 +87,7 @@ func connect_to_host(address: String, port: int = 8890) -> Error:
 	if _peer.get_status() == _peer.STATUS_CONNECTED:
 		_address = address
 		_logger.info("Connected to noray at %s:%s", [address, port])
+		Main.output("Connected to noray at " + str(address) + ":" + str(port))
 		on_connect_to_host.emit()
 		return OK
 	else:
