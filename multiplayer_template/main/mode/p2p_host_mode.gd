@@ -12,7 +12,9 @@ var my_member_data : LobbyMember = LobbyMember.new()
 
 var has_authority : bool = false
 
-var lobby_name : String = "Lobby Name"
+var lobby_name : String = "LobbyName"
+
+var lobby_lan_broadcast : bool = false
 
 func _init() -> void:
 	id = "p2p_host"
@@ -28,14 +30,14 @@ func open() -> void:
 	lobby.accepted_into_lobby.connect(_on_accepted_into_lobby)
 	lobby.received_external_address.connect(_on_lobby_external_address_received)
 	lobby.authority_acknowleged.connect(_on_authority_acknowleged)
-	Main.main.add_child(lobby)
+	Main.main.add_child(lobby, true)
 	
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
 	lobby_manager.is_master = true
-	Main.main.add_child(lobby_manager)
+	Main.main.add_child(lobby_manager, true)
 	
 	lobby_database = Main.main.lobby_database_scene.instantiate()
-	Main.main.add_child(lobby_database)
+	Main.main.add_child(lobby_database, true)
 	lobby_database.data_changed.connect(_on_lobby_data_changed)
 	
 	my_member_data = Lobby.lobby_member_class.new()
@@ -58,6 +60,13 @@ func close() -> void:
 	
 func host() -> void:
 	Main.output("Hosting p2p game")
+	lobby_lan_broadcast = false
+	launch_lobby()
+	
+	
+func host_with_lan() -> void:
+	Main.output("Hosting p2p game")
+	lobby_lan_broadcast = true
 	launch_lobby()
 	
 	
@@ -121,7 +130,10 @@ func leave_lobby() -> void:
 	
 	
 func get_additional_lobby_args() -> Array[String]:
-	return ["--name " + lobby_name]
+	var args : Array[String] = ["--name " + lobby_name]
+	if lobby_lan_broadcast:
+		args.append("--lan-broadcast")
+	return args
 	
 	
 func _on_connected_to_server() -> void:

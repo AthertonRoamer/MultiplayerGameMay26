@@ -2,7 +2,7 @@ class_name PlayerProjectileHandler
 extends ProjectileHandler
 
 @export var default_energy_cost : float = 1
-var energy_cost : float = default_energy_cost
+@onready var energy_cost : float = default_energy_cost
 
 func set_up_projectile() -> Projectile:
 	var p := super()

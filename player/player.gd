@@ -36,6 +36,8 @@ func _ready():
 	local = id == multiplayer.get_unique_id()
 	if not local:
 		name_display.text = player_name
+	else:
+		name_display.text = ""
 	Main.mode.lobby.member_left.connect(_on_member_left)
 	if local:
 		$Camera2D.enabled = true
