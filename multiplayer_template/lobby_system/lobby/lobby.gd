@@ -10,7 +10,7 @@ signal accepted_into_lobby
 signal authority_acknowleged(member_has_authority : bool)
 
 signal member_joined(new_member : LobbyMember)
-signal member_left
+signal member_left(old_member : LobbyMember)
 
 var stats : LobbyStatsNoray = LobbyStatsNoray.new()
 var members : Array[LobbyMember] = []
@@ -175,7 +175,7 @@ func update_remote_lobby_member_data(new_member_data : Array) -> void:
 					break
 			if absent:
 				Main.output("Member left: " + str(old_member.serialize_to_dictionary()))
-				member_left.emit()
+				member_left.emit(old_member)
 		#for absent_member in absent_members:
 			#Main.output("Member left: " + str(absent_member.serialize_to_dictionary()))
 			#member_left.emit(absent_member)
@@ -376,8 +376,4 @@ func leave_lobby() -> void:
 	Network.close_peer()
 	if game_manager.in_game:
 		end_game()
-	
-	
-func _exit_tree() -> void:
-	Main.output("Lobby " + str(self) + " exiting tree")
 	
