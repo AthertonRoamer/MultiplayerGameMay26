@@ -11,7 +11,7 @@ func _init() -> void:
 
 func open() -> void:
 	noray_manager = NorayManager.new()
-	Main.main.add_child(noray_manager)
+	Main.main.add_child(noray_manager, true)
 	super()
 	
 	Main.output("Opening noray lobby mode")
@@ -28,6 +28,7 @@ func launch_server() -> void:
 	Network.max_clients = lobby.stats.max_members
 	
 	#Network.initiate_enet_server()
+	
 	Main.output("about to initiate noray server")
 	await noray_manager.initiate_noray_server()
 	Main.output("Finished initiating noray server")
